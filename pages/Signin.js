@@ -1,11 +1,40 @@
 import { Col, Row } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined,MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Link from 'next/link';
-
+import {useContext,useState} from 'react';
+import { AuthContext } from '../context/auth';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 const Signin = () => {
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+
+    const [loading,setLoading]=useState(false);
+    const [auth,setAuth]=useContext(AuthContext);
+    const router=useRouter();
+
+    const onFinish = async (values) => {
+
+        setLoading(true);
+        const {data}=await axios.post("/auth/signin",values,{
+            headers :{
+                'Content-Type' : 'application/json'
+            }
+        });
+        
+        if(data.success){
+            const {token,user}=data;
+            setAuth({token,user});
+            localStorage.setItem('auth',JSON.stringify({token,user}));
+            toast.success('Logged in successfully');
+            setLoading(false);
+            router.push("/admin");
+        }
+        else{
+            const {error}=data;
+            toast.error(error);
+            setLoading(false);
+        }
     };
 
     return (
@@ -21,15 +50,15 @@ const Signin = () => {
                     onFinish={onFinish}
                 >
                     <Form.Item
-                        name="username"
+                        name="email"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your Username!',
+                                type : 'email',
                             },
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -57,7 +86,7 @@ const Signin = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                             Log in
                         </Button>
                         Or <Link href="/Signup">register now!</Link>

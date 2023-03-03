@@ -1,11 +1,41 @@
 import { Col, Row } from 'antd';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { AuthContext } from '../context/auth';
+import { useContext,useState } from 'react';
+import  toast  from 'react-hot-toast';
 
 const Signup = () => {
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+
+    const [auth,setAuth]=useContext(AuthContext);
+    const [loading,setLoading]=useState(false);
+    const router=useRouter();
+
+    const onFinish = async (values) => {
+        
+        setLoading(true);
+        const {data}=await axios.post("/auth/signup",values,{
+            headers :{
+                'Content-Type' : 'application/json'
+            }
+        });
+        
+        if(data.success){
+            const {token,user}=data;
+            setAuth({token,user});
+            localStorage.setItem('auth',JSON.stringify({token,user}));
+            toast.success('User created successfully');
+            setLoading(false);
+            router.push("/admin");
+        }
+        else{
+            const {error}=data;
+            toast.error(error);
+            setLoading(false);
+        }
     };
 
     return (
@@ -59,7 +89,7 @@ const Signup = () => {
                     </Form.Item>
                     <br/>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                             Register
                         </Button>
                         Or <Link href="/Signin">Sign in!</Link>

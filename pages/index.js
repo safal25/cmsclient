@@ -1,4 +1,3 @@
-import ToggleTheme from "../components/ToggleTheme";
 
 function Home(){
     return (
