@@ -28,7 +28,7 @@ const Signin = () => {
             localStorage.setItem('auth',JSON.stringify({token,user}));
             toast.success('Logged in successfully');
             setLoading(false);
-            router.push("/admin");
+            router.push("/");
         }
         else{
             const {error}=data;
@@ -76,9 +76,6 @@ const Signin = () => {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
 
                         <a className="login-form-forgot" href="">
                             Forgot password
@@ -89,7 +86,7 @@ const Signin = () => {
                         <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                             Log in
                         </Button>
-                        Or <Link href="/Signup">register now!</Link>
+                        <span style={{paddingLeft : "5px"}}>Or</span> <Link href="/Signup">register now!</Link>
                     </Form.Item>
                 </Form>
             </Col>

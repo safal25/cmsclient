@@ -92,7 +92,7 @@ const Signup = () => {
                         <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                             Register
                         </Button>
-                        Or <Link href="/Signin">Sign in!</Link>
+                       <span style={{paddingLeft : "5px"}}> Or </span> <Link href="/Signin">Sign in!</Link>
                     </Form.Item>
                 </Form>
             </Col>
