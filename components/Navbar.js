@@ -22,6 +22,7 @@ const Navbar = () => {
         user : null
     });
     localStorage.removeItem("auth");
+    localStorage.removeItem("theme");
     router.push("/Signin");
   }
 

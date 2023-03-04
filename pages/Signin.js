@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import { LockOutlined,MailOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
 import {useContext,useState} from 'react';
 import { AuthContext } from '../context/auth';
@@ -44,9 +44,6 @@ const Signin = () => {
                 <Form
                     name="normal_login"
                     className="login-form"
-                    initialValues={{
-                        remember: true,
-                    }}
                     onFinish={onFinish}
                 >
                     <Form.Item
@@ -77,9 +74,9 @@ const Signin = () => {
                     </Form.Item>
                     <Form.Item>
 
-                        <a className="login-form-forgot" href="">
+                        <Link className="login-form-forgot" href="/forgot-password">
                             Forgot password
-                        </a>
+                        </Link>
                     </Form.Item>
 
                     <Form.Item>
