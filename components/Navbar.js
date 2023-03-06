@@ -26,6 +26,19 @@ const Navbar = () => {
     router.push("/Signin");
   }
 
+  const getUserLink=()=>{
+
+    if(auth?.user?.role==='Admin'){
+        return "/admin";
+    }
+    else if(auth?.user?.role==='Author'){
+        return "/author";
+    }
+    else{
+        return "/subscriber";
+    }
+  }
+
   const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
@@ -51,11 +64,11 @@ const Navbar = () => {
             </>)}
             {auth?.user!==null && 
             (<>
-                <SubMenu theme={myTheme} key="SubMenu" icon={<SettingOutlined /> } title="Dashboard" style={{marginLeft : "auto"}}>
+                <SubMenu theme={myTheme} key="SubMenu" icon={<SettingOutlined /> } title={auth?.user?.username || "Panel"} style={{marginLeft : "auto"}}>
                     <Menu.ItemGroup title="Management">
-                        <Menu.Item key="Admin" icon={<HddOutlined/>}>
-                            <Link href="/admin">
-                                Admin
+                        <Menu.Item key="Dashboard" icon={<HddOutlined/>}>
+                            <Link href={getUserLink()}>
+                                Dashboard
                             </Link>
                         </Menu.Item>
                         <Menu.Item onClick={signout} key="Signout" icon={<LogoutOutlined />}>Signout</Menu.Item>
