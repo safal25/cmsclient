@@ -7,13 +7,14 @@ import { EditOutlined } from "@ant-design/icons";
 import { useState ,useRef, useEffect, useContext} from "react";
 import { AuthContext } from "../../../context/auth";
 import { ThemeContext } from "../../../context/theme";
+import { PostContext } from "../../../context/post";
 
 
 
 const categories= ()=>{
 
     const [loading,setLoading]=useState(false);
-    const [categories,setCategories]=useState([]);
+    const {categories,setCategories}=useContext(PostContext);
     const [auth,setAuth]=useContext(AuthContext);
     const [theme,setTheme]=useContext(ThemeContext);
     const [categoryLoading,setCategoryLoading]=useState(true);
@@ -96,7 +97,7 @@ const categories= ()=>{
 
             if(data?.success){
                 console.log("inside fetch categories",data.categories);
-                setCategories(categories.concat(data.categories));
+                setCategories(data.categories);
                 setCategoryLoading(false);
             }
             else{

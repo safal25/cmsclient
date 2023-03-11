@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import { List, Button } from "antd";
 import axios from "axios";
 import { PlusOutlined } from "@ant-design/icons";
-import {useState,useEffect} from "react";
+import {useState,useEffect,useContext} from "react";
 import { toast } from "react-hot-toast";
+import { PostContext } from "../../../context/post";
 
 const allposts = () => {
     //states
-    const [posts,setPosts]=useState([]);
+    const {posts,setPosts}=useContext(PostContext);
     //router
     const router = useRouter();
 
@@ -26,7 +27,7 @@ const allposts = () => {
             const {data}=await axios.get("/posts/get-posts");
 
             if(data?.success){
-                setPosts(posts.concat(data.posts));
+                setPosts(data.posts);
             }
             else{
                 toast.error(data.error);
