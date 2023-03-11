@@ -2,3 +2,7 @@
     color : #1890ff !important;
     text-decoration: underline;
 }
+
+.jodit-workplace{
+    min-height: 500px;
+}

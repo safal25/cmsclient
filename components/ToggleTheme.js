@@ -27,6 +27,10 @@ const ToggleTheme=()=>{
         <div>
         <Head>
             <link rel="stylesheet" href={`http://localhost:3000/css/${myTheme}.css`} />
+            <link
+  rel="stylesheet"
+  href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
+/>
         </Head>
         {myTheme==="light"?<Switch checkedChildren='Dark' unCheckedChildren='Light' onChange={handleThemeChange}  /> : <Switch checkedChildren='Dark' unCheckedChildren='Light' onChange={handleThemeChange} defaultChecked /> }
         </div>
