@@ -1,16 +1,30 @@
 import AdminLayout from "../../../components/layouts/AdminLayout";
 //import TextEditor from "../../../components/TextEditor";
-import { Row,Col,Button,Input,Select } from "antd";
+import { Row,Col,Button,Input,Select,Modal,Tabs,Space } from "antd";
 import React, { useState, useRef,useContext,useEffect} from 'react';
 import {ThemeContext} from "../../../context/theme";
 import {AuthContext} from "../../../context/auth";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined,UploadOutlined } from "@ant-design/icons";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
+import UploadImage from "../../../components/FeaturedImages/UploadImage";
 
 const JoditEditor=dynamic(()=> import('jodit-react'),{ssr : false,});
+
+const items = [
+    {
+      key: '1',
+      label: `Upload Image`,
+      children: <UploadImage/>,
+    },
+    {
+      key: '2',
+      label: `Featured Images`,
+      children: `Featured Image Tab`,
+    },
+  ];
 
 const newpost=()=>{
     //States
@@ -19,6 +33,7 @@ const newpost=()=>{
     const [options,setOptions]=useState([]);
     const [currCategories,setCurrCategories]=useState([]);
     const [loading,setLoading]=useState(false);
+    const [showModal,setShowModal]=useState(false);
     
     //Contexts
     const [myTheme,setTheme]=useContext(ThemeContext);
@@ -158,8 +173,20 @@ const newpost=()=>{
                     />
                     <br/>
                     <br/>
-                    <Button type="primary" onClick={handlePostSave} loading={loading}>Save Post</Button>
+                    <Space direction="vertical">
+                        <Button type="primary" onClick={handlePostSave} loading={loading}>Save Post</Button>
+                        <Button type="primary" icon={<UploadOutlined/>} onClick={()=>{setShowModal(true)}} >Featured Image</Button>
+                    </Space>
                 </Col>
+                <Modal bodyStyle={{backgroundColor : (myTheme==="dark")?"black":""}} 
+                       title="Featured Images" 
+                       open={showModal} 
+                       footer={null}
+                       closable
+                       onCancel={()=>{setShowModal(false)}}
+                >
+                    <Tabs defaultActiveKey="1" items={items} />
+                </Modal>
             </Row>
         </AdminLayout>
     )

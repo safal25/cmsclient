@@ -6,3 +6,7 @@
 .jodit-workplace{
     min-height: 500px;
 }
+
+.darkBackground{
+    background-color: black;
+}
