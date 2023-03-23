@@ -2,15 +2,13 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
-
-
-
-
+import { MediaContext } from '../../context/media';
 
 
 const UploadImage = () => {
 
   const [auth,setAuth]=useContext(AuthContext);
+  const {media,setMedia}=useContext(MediaContext);
 
   const props = {
     name: 'file',
@@ -24,6 +22,13 @@ const UploadImage = () => {
       }
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
+        console.log(info.file.response);
+        setMedia({
+          Images : [...media.Images,info.file.response],
+          selected : info.file.response,
+          showMediaModal : false,
+        });
+
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }

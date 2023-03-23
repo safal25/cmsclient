@@ -2,6 +2,7 @@
 import { ThemeProvider} from '../context/theme';
 import { AuthProvider } from '../context/auth';
 import { PostProvider } from '../context/post';
+import { MediaProvider } from '../context/media';
 import { Toaster } from 'react-hot-toast';
 import Navbar from '../components/Navbar';
 import "../public/css/styles.css";
@@ -12,9 +13,11 @@ export default function MyApp({ Component, pageProps }) {
         <ThemeProvider>
             <AuthProvider>
                 <PostProvider>
-                    <Toaster />
-                    <Navbar />
-                    <Component {...pageProps} />
+                    <MediaProvider>
+                        <Toaster />
+                        <Navbar />
+                        <Component {...pageProps} />
+                    </MediaProvider>
                 </PostProvider>
             </AuthProvider>
         </ThemeProvider>

@@ -1,15 +1,17 @@
 import AdminLayout from "../../../components/layouts/AdminLayout";
 //import TextEditor from "../../../components/TextEditor";
-import { Row,Col,Button,Input,Select,Modal,Tabs,Space } from "antd";
+import { Row,Col,Button,Input,Select,Modal,Tabs,Space,Image } from "antd";
 import React, { useState, useRef,useContext,useEffect} from 'react';
 import {ThemeContext} from "../../../context/theme";
 import {AuthContext} from "../../../context/auth";
+import { MediaContext } from "../../../context/media";
 import { EditOutlined,UploadOutlined } from "@ant-design/icons";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import UploadImage from "../../../components/FeaturedImages/UploadImage";
+import FeaturedImage from "../../../components/FeaturedImages/FeaturedImage";
 
 const JoditEditor=dynamic(()=> import('jodit-react'),{ssr : false,});
 
@@ -22,9 +24,9 @@ const items = [
     {
       key: '2',
       label: `Featured Images`,
-      children: `Featured Image Tab`,
+      children: <FeaturedImage />,
     },
-  ];
+];
 
 const newpost=()=>{
     //States
@@ -38,6 +40,7 @@ const newpost=()=>{
     //Contexts
     const [myTheme,setTheme]=useContext(ThemeContext);
     const [auth,setAuth]=useContext(AuthContext);
+    const {media,setMedia}=useContext(MediaContext);
 
     //ref's
     const editor = useRef(null);
@@ -111,7 +114,7 @@ const newpost=()=>{
         setLoading(true);
         try {
             
-            const {data}=await axios.post("/posts/create-post",{title,content,categories : currCategories},{
+            const {data}=await axios.post("/posts/create-post",{title,content,categories : currCategories,featuredImage : media?.selected?.image._id},{
                 headers :{
                     'Content-Type' : 'application/json'
                 }
@@ -175,15 +178,16 @@ const newpost=()=>{
                     <br/>
                     <Space direction="vertical">
                         <Button type="primary" onClick={handlePostSave} loading={loading}>Save Post</Button>
-                        <Button type="primary" icon={<UploadOutlined/>} onClick={()=>{setShowModal(true)}} >Featured Image</Button>
+                        {(media?.selected) && (<Image width="100%" src={media?.selected?.image?.url} />)}
+                        <Button type="primary" icon={<UploadOutlined/>} onClick={()=>{setMedia({...media,showMediaModal : true})}} >Featured Image</Button>
                     </Space>
                 </Col>
                 <Modal bodyStyle={{backgroundColor : (myTheme==="dark")?"black":""}} 
                        title="Featured Images" 
-                       open={showModal} 
+                       open={media.showMediaModal} 
                        footer={null}
                        closable
-                       onCancel={()=>{setShowModal(false)}}
+                       onCancel={()=>{setMedia({...media,showMediaModal : false})}}
                 >
                     <Tabs defaultActiveKey="1" items={items} />
                 </Modal>
