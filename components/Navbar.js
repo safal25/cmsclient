@@ -1,4 +1,4 @@
-import { UserAddOutlined,UserOutlined, CloudOutlined, SettingOutlined,LogoutOutlined,HddOutlined } from '@ant-design/icons';
+import { UserAddOutlined,UserOutlined, CloudOutlined, SettingOutlined,LogoutOutlined,HddOutlined,DatabaseOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useState,useContext } from 'react';
 import ToggleTheme from './ToggleTheme';
@@ -47,6 +47,11 @@ const Navbar = () => {
             <Menu.Item key="CMS" icon={<CloudOutlined />}>
                 <Link href="/">
                     CMS
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="Post" icon={<DatabaseOutlined />}>
+                <Link href="/post">
+                    Post
                 </Link>
             </Menu.Item>
            {auth?.user===null && 
