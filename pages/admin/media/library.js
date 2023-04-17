@@ -1,9 +1,12 @@
 import AdminLayout from "../../../components/layouts/AdminLayout"
+import FeaturedImage from "../../../components/FeaturedImages/FeaturedImage"
 
 const library=()=>{
     return (
         <AdminLayout>
-            <h1>Library page</h1>
+            <div>
+                <FeaturedImage />
+            </div>
         </AdminLayout>
     );
 }

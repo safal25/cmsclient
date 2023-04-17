@@ -4,6 +4,7 @@ import { useContext,useEffect, useState } from 'react';
 import { AuthContext } from '../../context/auth';
 import { MediaContext } from '../../context/media';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const {Dragger}=Upload;
 
@@ -46,6 +47,7 @@ const FeaturedImage=()=>{
         if(data?.success){
           setMedia({...media,Images : media.Images.filter((image)=>{return image._id!==id})});
         }
+        toast.success("Image deleted successfully");
         
       } catch (error) {
           console.log('Error while deleting images',error);

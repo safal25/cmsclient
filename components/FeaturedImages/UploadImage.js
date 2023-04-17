@@ -3,13 +3,14 @@ import { Button, message, Upload } from 'antd';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
 import { MediaContext } from '../../context/media';
+import { useRouter } from 'next/router';
 
 
-const UploadImage = () => {
+const UploadImage = ({redirectToLibrary = false}) => {
 
   const [auth,setAuth]=useContext(AuthContext);
   const {media,setMedia}=useContext(MediaContext);
-
+  const router=useRouter();
   const props = {
     name: 'file',
     action: 'http://localhost:5000/api/media/upload-image',
@@ -28,6 +29,9 @@ const UploadImage = () => {
           selected : info.file.response,
           showMediaModal : false,
         });
+        if(redirectToLibrary){
+          router.push("/admin/media/library");
+        }
 
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);

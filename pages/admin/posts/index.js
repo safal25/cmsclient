@@ -43,11 +43,26 @@ const allposts = () => {
     }
     
     const handleEdit=(post)=>{
-        console.log(post);
+        router.push(`/admin/posts/${post.slug}`)
     }
 
-    const handleDelete=(slug)=>{
-        console.log(slug);
+    const handleDelete=async (postId)=>{
+        try {
+            const {data} = await axios.delete(`/posts/delete-post/${postId}`);
+            
+            if(data?.success){
+                toast.success('Post deleted successfully');
+                setPosts(posts.filter((post)=>{return post._id!==postId}));
+                console.log(data.post);
+            }
+            else{
+                toast.error(data.error);
+            }
+            
+          } catch (error) {
+            toast.error('Some error occured, please try again later');
+            console.error(error);
+          }
     }
 
     return (
@@ -65,7 +80,7 @@ const allposts = () => {
                 renderItem={(item) => (
                     <List.Item
 
-                        actions={[<a onClick={() => handleEdit(item)}>edit</a>, <a onClick={() => handleDelete(item.slug)}>delete</a>]}
+                        actions={[<a onClick={() => handleEdit(item)}>edit</a>, <a onClick={() => handleDelete(item._id)}>delete</a>]}
                     >
                         <h4>{item.title}</h4>
                     </List.Item>

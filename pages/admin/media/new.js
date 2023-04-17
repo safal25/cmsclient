@@ -1,9 +1,14 @@
 import AdminLayout from "../../../components/layouts/AdminLayout"
+import UploadImage from "../../../components/FeaturedImages/UploadImage";
 
 const newpost=()=>{
     return (
         <AdminLayout>
-            <h1>New media page</h1>
+
+            <div style={{padding : '100px', textAlign : 'center'}}>
+                <UploadImage redirectToLibrary={true} />
+            </div>
+            
         </AdminLayout>
     );
 }
