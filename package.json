@@ -20,6 +20,7 @@
     "antd": "^5.2.2",
     "axios": "^1.3.4",
     "draft-js": "^0.11.7",
+    "generate-password": "^1.7.0",
     "html-react-parser": "^3.0.15",
     "jodit-react": "^1.3.39",
     "next": "^13.2.1",
