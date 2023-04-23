@@ -2104,6 +2104,7 @@ html {
   padding: 0;
   line-height: 30px;
   transition: all 0.3s;
+  color : white;
 }
 @supports (-moz-appearance: meterbar) {
   .ant-select-single .ant-select-selector .ant-select-selection-item,
@@ -19539,7 +19540,7 @@ textarea.ant-input {
   vertical-align: top;
 }
 .ant-input-password-icon.anticon {
-  color: rgba(255, 255, 255, 0.45);
+  color: white !important;
   cursor: pointer;
   transition: all 0.3s;
 }

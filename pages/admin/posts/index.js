@@ -1,11 +1,12 @@
 import AdminLayout from "../../../components/layouts/AdminLayout";
 import { useRouter } from "next/router";
-import { List, Button } from "antd";
+import { Button } from "antd";
 import axios from "axios";
 import { PlusOutlined } from "@ant-design/icons";
 import {useState,useEffect,useContext} from "react";
 import { toast } from "react-hot-toast";
 import { PostContext } from "../../../context/post";
+import AllPostList from "../../../components/PostComponents/AllPostList";
 
 const allposts = () => {
     //states
@@ -73,19 +74,7 @@ const allposts = () => {
             </Button>
             </div>
             <h1 style={{paddingLeft : "10px"}}>All Posts</h1>
-            <List
-                itemLayout="horizontal"
-                dataSource={posts}
-                bordered
-                renderItem={(item) => (
-                    <List.Item
-
-                        actions={[<a onClick={() => handleEdit(item)}>edit</a>, <a onClick={() => handleDelete(item._id)}>delete</a>]}
-                    >
-                        <h4>{item.title}</h4>
-                    </List.Item>
-                )}
-            />
+            <AllPostList posts={posts} handleEdit={handleEdit} handleDelete={handleDelete}/>
         </AdminLayout>
     );
 }
