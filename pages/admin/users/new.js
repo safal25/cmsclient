@@ -90,7 +90,7 @@ const newuser=()=>{
                                      {value : "Author",label : "Author"}]}
                     />
                     <br/>
-                    <Checkbox style={{margin : "10px 0px 10px 0px"}}>
+                    <Checkbox style={{margin : "10px 0px 10px 0px"}} onChange={(e)=>{setChecked(e.target.checked)}}>
                         Send an email to user about account creation
                     </Checkbox>
                     <br/>

@@ -46,8 +46,12 @@ const FeaturedImage=()=>{
         const {data}=await axios.delete(`/media/delete-image/${id}`)
         if(data?.success){
           setMedia({...media,Images : media.Images.filter((image)=>{return image._id!==id})});
+          toast.success("Image deleted successfully");
         }
-        toast.success("Image deleted successfully");
+        else{
+          toast.error(data.error);
+        }
+
         
       } catch (error) {
           console.log('Error while deleting images',error);

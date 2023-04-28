@@ -6,7 +6,7 @@ import { MediaContext } from '../../context/media';
 import { useRouter } from 'next/router';
 
 
-const UploadImage = ({redirectToLibrary = false}) => {
+const UploadImage = ({redirectToLibrary = false,page="admin"}) => {
 
   const [auth,setAuth]=useContext(AuthContext);
   const {media,setMedia}=useContext(MediaContext);
@@ -30,7 +30,7 @@ const UploadImage = ({redirectToLibrary = false}) => {
           showMediaModal : false,
         });
         if(redirectToLibrary){
-          router.push("/admin/media/library");
+          router.push(`/${page}/media/library`);
         }
 
       } else if (info.file.status === 'error') {

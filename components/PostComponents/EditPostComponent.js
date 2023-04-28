@@ -27,14 +27,18 @@ const items = [
     },
 ];
 
-const NewPostComponent=({page="admin"})=>{
+const EditPostComponent=({page="admin"})=>{
     //States
     const [content, setContent] = useState('');
     const [title,setTitle]=useState('');
     const [options,setOptions]=useState([]);
     const [currCategories,setCurrCategories]=useState([]);
     const [loading,setLoading]=useState(false);
+    const [defaultCategories,setDefaultCategories]=useState([]);
     const [showModal,setShowModal]=useState(false);
+    const [postId,setPostId]=useState('');
+    const [loadingCategories,setLoadingCategories]=useState(true);
+
     
     //Contexts
     const [myTheme,setTheme]=useContext(ThemeContext);
@@ -72,6 +76,49 @@ const NewPostComponent=({page="admin"})=>{
 
     }
 
+    const getPost=async ()=>{
+
+        try {
+
+            const {data}=await axios.get(`posts/get-post/${router.query.slug}`);
+            if(data?.success){
+                const post=data.post;
+                setContent(post.content);
+                setTitle(post.title);
+                let tempArr=[];
+                let idArr=[];
+                post.categories.map((category)=>{
+                    tempArr.push({
+                        value : category._id,
+                        label : category.name,
+                    });
+                    idArr.push(category._id);
+                })
+                setDefaultCategories(tempArr);
+                setCurrCategories(idArr);
+                if(post.featuredImage){
+                    setMedia({...media,selected : {image : post.featuredImage}});
+                }
+                else{
+                    setMedia({...media,selected : null});
+                }
+                
+                setPostId(post._id);
+                setLoadingCategories(false);
+            }
+            else{
+                toast.error(data.message);
+            }
+            
+        } catch (error) {
+            console.log(error);
+            toast.error('Some error occured, please try back in sometime');
+        }
+    }
+
+    useEffect(()=>{
+        getPost();
+    },[router?.query?.slug])
 
     useEffect(()=>{
             if(localStorage.getItem("post-title")){
@@ -113,14 +160,14 @@ const NewPostComponent=({page="admin"})=>{
         setLoading(true);
         try {
             
-            const {data}=await axios.post("/posts/create-post",{title,content,categories : currCategories,featuredImage : media?.selected?.image._id},{
+            const {data}=await axios.put(`/posts/edit-post/${postId}`,{title,content,categories : currCategories,featuredImage : media?.selected?.image._id},{
                 headers :{
                     'Content-Type' : 'application/json'
                 }
             });
 
             if(data?.success){
-                toast.success("Post created successfully");
+                toast.success("Post updated successfully");
                 setContent('');
                 setCurrCategories([]);
                 setTitle("");
@@ -163,7 +210,8 @@ const NewPostComponent=({page="admin"})=>{
                 </Col>
                 <Col xs={22} sm={22} lg={10} offset={1}>
                     <h1 style={{paddingTop : "10px"}}>Categories</h1>
-                    <Select
+                    {loadingCategories && (<div>Loading...</div>)}
+                    {!loadingCategories && (<Select
                         mode="multiple"
                         placeholder="Select Category"
                         onChange={handleSelectChange}
@@ -171,7 +219,8 @@ const NewPostComponent=({page="admin"})=>{
                             width: '100%',
                         }}
                         options={options}
-                    />
+                        defaultValue={defaultCategories}
+                    />) }
                     <br/>
                     <br/>
                     <Space direction="vertical">
@@ -193,4 +242,4 @@ const NewPostComponent=({page="admin"})=>{
     )
 }
 
-export default NewPostComponent;
+export default EditPostComponent;
