@@ -24,7 +24,7 @@ const categories= ()=>{
     const formRef=useRef(null);
 
     useEffect(()=>{
-        console.log("inside categories useEffect",auth);
+        //console.log("inside categories useEffect",auth);
        if(auth?.user) fetchCategories();
     },[auth?.token])
 

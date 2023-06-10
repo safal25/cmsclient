@@ -1,6 +1,8 @@
 import { Row,Col,Avatar,Card } from "antd";
 import axios from "axios";
 import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "../../context/auth";
 
 const post=({posts})=>{
 

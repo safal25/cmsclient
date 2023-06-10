@@ -6,11 +6,13 @@ import { PlusOutlined } from "@ant-design/icons";
 import {useState,useEffect,useContext} from "react";
 import { toast } from "react-hot-toast";
 import { PostContext } from "../../../context/post";
+import { AuthContext } from "../../../context/auth";
 import AllPostList from "../../../components/PostComponents/AllPostList";
 
 const allposts = () => {
-    //states
+    //context
     const {posts,setPosts}=useContext(PostContext);
+    const [auth,setAuth]=useContext(AuthContext);
     //router
     const router = useRouter();
 
@@ -18,7 +20,7 @@ const allposts = () => {
 
     useEffect(()=>{
         fetchPosts();
-    },[]);
+    },[auth?.token]);
 
     //methods
     const fetchPosts=async ()=>{
