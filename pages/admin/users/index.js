@@ -28,6 +28,7 @@ const userlist=()=>{
             const {data}=await axios.get('/user/get-users');
 
             if(data?.success){
+                console.log(data.users);
                 setUsers(data.users);
             }
             else{
@@ -84,7 +85,7 @@ const userlist=()=>{
                                       <a disabled={user._id===auth?.user?._id} onClick={()=>{handleDelete(user)}}>delete</a>]}
                         >
                             <List.Item.Meta 
-                                avatar={<Avatar>{user.username[0]}</Avatar>}
+                                avatar={<Avatar src={user?.image?.url}>{user.username[0]}</Avatar>}
                                 title={<p style={{color : (theme==='dark')?'white':''}}>{user.username}</p>}
                             />
                             <List.Item.Meta 

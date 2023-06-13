@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row,Col,Input,Button,Checkbox,Select } from "antd";
+import { Row,Col,Input,Button,Checkbox,Select,Tabs,Avatar } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {toast} from "react-hot-toast";
 import axios from "axios";
@@ -8,7 +8,23 @@ import AdminLayout from "../../../components/layouts/AdminLayout";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/theme";
 import { AuthContext } from "../../../context/auth";
+import { MediaContext } from "../../../context/media";
 import { useRouter } from "next/router";
+import UploadImage from "../../../components/FeaturedImages/UploadImage";
+import FeaturedImage from "../../../components/FeaturedImages/FeaturedImage";
+
+const items = [
+    {
+      key: '1',
+      label: `Upload Image`,
+      children: <UploadImage/>,
+    },
+    {
+      key: '2',
+      label: `Featured Images`,
+      children: <FeaturedImage />,
+    },
+];
 
 const edituser=()=>{
 
@@ -20,10 +36,11 @@ const edituser=()=>{
     const [password,setPassword]=useState(generate({length : 8}));
     const [checked,setChecked]=useState(false);
     const [loading,setLoading]=useState(true);
-    //context
 
+    //context
     const [myTheme,setTheme]=useContext(ThemeContext);
     const [auth,setAuth]=useContext(AuthContext);
+    const {media,setMedia}=useContext(MediaContext);
 
     //router
     const router=useRouter();
@@ -41,6 +58,12 @@ const edituser=()=>{
                 setName(data.user.username);
                 setRole(data.user.role);
                 setEmail(data.user.email);
+                if(data.user.image){
+                    setMedia({...media,selected : {image : data.user.image}});
+                }
+                else{
+                    setMedia({...media,selected : null});
+                }
                 setLoading(false);
             }
 
@@ -67,7 +90,9 @@ const edituser=()=>{
             console.log(email);
             console.log(password);
             console.log(role);*/
-            const {data}=await axios.put(`/user/edit-user/${router.query.id}`,{username : name,role,email,password,checked});
+            const {data}=await axios.put(`/user/edit-user/${router.query.id}`,{username : name,role,email,
+                                                                              password,checked,
+                                                                              image : media?.selected?.image._id});
 
             if(data?.success){
                 toast.success("User updated successfully");
@@ -94,7 +119,11 @@ const edituser=()=>{
         (<AdminLayout>
             <Row>
                 <Col span={12} offset={6}>
-                    <h3 style={{marginBottom : "-5px",marginTop : "5px"}} >Add new user</h3>
+                    <h3 style={{marginBottom : "-5px",marginTop : "5px"}} >Edit user</h3>
+                    <div style={{textAlign : "center"}}>
+                        <Avatar size={100} src={media?.selected?.image?.url}>{name[0].toUpperCase()}</Avatar>
+                    </div>
+                    <Tabs defaultActiveKey="1" items={items} />
                     <Input placeholder="User Name" 
                            value={name}
                            onChange={(e)=>{setName(e.target.value)}}
