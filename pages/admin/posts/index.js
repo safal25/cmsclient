@@ -27,7 +27,7 @@ const allposts = () => {
 
         try {
 
-            const {data}=await axios.get("/posts/get-posts");
+            const {data}=await axios.get("/posts/get-post-admin");
 
             if(data?.success){
                 setPosts(data.posts);
