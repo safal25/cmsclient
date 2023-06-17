@@ -8,9 +8,9 @@ import {
     CommentOutlined,
   } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import Link from 'next/link';
-
+import { AuthContext } from '../../context/auth';
 
 
 function getItem(label, key, icon, children, type) {
@@ -26,9 +26,14 @@ function getItem(label, key, icon, children, type) {
 
 
 const AuthorSidebar = () => {
+    //states
     const [collapsed, setCollapsed] = useState(false);
     const [currentLink,setCurrentLink]= useState("");
-    
+
+    //context
+    const [auth,setAuth] = useContext(AuthContext);
+
+    //useEffect &  functions
     useEffect(()=>{
 
       process.browser && setCurrentLink(window.location.pathname);
@@ -55,7 +60,7 @@ const AuthorSidebar = () => {
       //Comments
       getItem((<Link href="/author/comments">Comments</Link>), '10', <CommentOutlined />),
       //Profile
-      getItem((<Link href="/author/userid">Profile</Link>), '13', <UserOutlined />),
+      getItem((<Link href={`/author/${auth?.user?._id}`}>Profile</Link>), '13', <UserOutlined />),
       
     ];
   

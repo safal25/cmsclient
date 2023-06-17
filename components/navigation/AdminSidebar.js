@@ -8,8 +8,9 @@ import {
     CommentOutlined,
   } from '@ant-design/icons';
   import { Button, Menu } from 'antd';
-  import { useEffect, useState } from 'react';
+  import { useEffect, useState,useContext } from 'react';
   import Link from 'next/link';
+  import { AuthContext } from '../../context/auth';
 
 
 
@@ -26,9 +27,15 @@ import {
 
 
   const AdminSidebar = () => {
+
+    //states
     const [collapsed, setCollapsed] = useState(false);
     const [currentLink,setCurrentLink]= useState("");
     
+    //context
+    const [auth,setAuth]=useContext(AuthContext);
+
+    //functions & useEffect
     useEffect(()=>{
 
       process.browser && setCurrentLink(window.location.pathname);
@@ -61,7 +68,7 @@ import {
           getItem((<Link href="/admin/users/new">Add New</Link>), '12'),
       ]),
       //Profile
-      getItem((<Link href="/admin/userid">Profile</Link>), '13', <UserOutlined />),
+      getItem((<Link href={`/admin/${auth?.user?._id}`}>Profile</Link>), '13', <UserOutlined />),
       //Customize
       getItem((<Link href="/admin/customize">Customize</Link>), '14', <BgColorsOutlined />),
     ];

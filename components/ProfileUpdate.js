@@ -4,14 +4,14 @@ import { LoadingOutlined } from "@ant-design/icons";
 import {toast} from "react-hot-toast";
 import axios from "axios";
 import { generate } from "generate-password";
-import AdminLayout from "../../../components/layouts/AdminLayout";
 import { useContext } from "react";
-import { ThemeContext } from "../../../context/theme";
-import { AuthContext } from "../../../context/auth";
-import { MediaContext } from "../../../context/media";
+import { AuthContext } from "../context/auth";
+import { MediaContext } from "../context/media";
+import { ThemeContext } from "../context/theme";
 import { useRouter } from "next/router";
-import UploadImage from "../../../components/FeaturedImages/UploadImage";
-import FeaturedImage from "../../../components/FeaturedImages/FeaturedImage";
+import UploadImage from "./FeaturedImages/UploadImage";
+import FeaturedImage from "./FeaturedImages/FeaturedImage";
+
 
 const items = [
     {
@@ -26,7 +26,7 @@ const items = [
     },
 ];
 
-const edituser=()=>{
+const ProfileUpdate=({page="admin"})=>{
 
     //states
 
@@ -90,13 +90,13 @@ const edituser=()=>{
             console.log(email);
             console.log(password);
             console.log(role);*/
-            const {data}=await axios.put(`/user/edit-user-by-admin/${router.query.id}`,{username : name,role,email,
+            const {data}=await axios.put(`/user/edit-user-by-${page}/${router.query.id}`,{username : name,role,email,
                                                                               password,checked,
                                                                               image : media?.selected?.image._id});
 
             if(data?.success){
                 toast.success("User updated successfully");
-                router.push('/admin/users');
+                router.push('/');
             }
 
         } catch (error) {
@@ -116,7 +116,7 @@ const edituser=()=>{
         <>
         {loading && (<LoadingOutlined />)}
         {!loading && 
-        (<AdminLayout>
+        (
             <Row>
                 <Col span={12} offset={6}>
                     <h3 style={{marginBottom : "-5px",marginTop : "5px"}} >Edit user</h3>
@@ -146,14 +146,15 @@ const edituser=()=>{
                            style={{margin : "10px 0px 10px 0px"}}  
                            size="large" />
                         </div> */}
-                    <Select style={{margin : "10px 0px 10px 0px"}}  
+                   { page==="admin" && (
+                      <Select style={{margin : "10px 0px 10px 0px"}}  
                             defaultValue={role}
                             size="large"
                             onChange={handleChange} 
                             options={[{value : 'Subscriber', label : 'Subscriber'},
                                      {value : "Admin",label : "Admin"},
-                                     {value : "Author",label : "Author"}]}
-                    />
+                                     {value : "Author",label : "Author"}]} 
+                       />) }
                     <br/>
                     <Checkbox style={{margin : "10px 0px 10px 0px"}} onChange={(e)=>{setChecked(e.target.checked)}}>
                         Generate a new password and notify user
@@ -163,32 +164,11 @@ const edituser=()=>{
                         Submit
                     </Button>
                 </Col>
-            </Row>
-        </AdminLayout>)}
+            </Row>)}
         </>
     )
 
 }
 
-/*export async function getServerSideProps({ params }) {
 
-    try {
-        const authToken=localStorage.getItem("auth")?.token;
-        const { data } = await axios.get(`/user/get-user/${params.id}`,{
-            headers : {
-                "Authorization" : `Bearer ${authToken}`
-            }
-        });
-
-        return {
-            props: { user: data?.user }
-        };
-        
-    } catch (error) {
-        console.log(error);
-    }
-
-
-}*/
-
-export default edituser;
+export default ProfileUpdate;
