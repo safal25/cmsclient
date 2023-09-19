@@ -5,7 +5,7 @@ import { ThemeContext } from "../../../context/theme";
 import AdminLayout from "../../../components/layouts/AdminLayout";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import {List, Row,Col, Avatar} from "antd";
+import {List, Row,Col, Avatar,Input} from "antd";
 
 
 
@@ -14,6 +14,7 @@ const userlist=()=>{
 
     //State
     const [users,setUsers]=useState([]);
+    const [keyword,setKeyword]=useState("");
 
     //Context
     const [auth,setAuth]=useContext(AuthContext);
@@ -75,9 +76,10 @@ const userlist=()=>{
             <Row>
                 <Col span={24}>
                     <h1>All Users</h1>
+                    <Input placeholder="Search" onChange={(e)=>{setKeyword(e.target.value.toLowerCase())}} />
                     <List
                       itemLayout="horizontal"
-                      dataSource={users}
+                      dataSource={users.filter((user)=>{return user.username.toLowerCase().includes(keyword)})}
                       bordered
                       renderItem={(user)=>(
                         <List.Item
