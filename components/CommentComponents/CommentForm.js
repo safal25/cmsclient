@@ -12,13 +12,14 @@ const CommentForm = ({loading,comment,setComment,handleSubmit})=>{
     return (
         <>
             <TextArea 
+                value={comment}
                 rows={4} 
                 placeholder="Write a comment...." 
                 maxLength={200} 
                 disabled={auth?.user===null || auth?.token===""}
                 onChange={(e)=>{setComment(e.target.value)}}
             />
-            <Button loading={loading} style={{marginTop : 4}}type="Primary" disabled={comment===""} onClick={handleSubmit}>
+            <Button loading={loading} style={{marginTop : 4}} type="Primary" disabled={comment===""} onClick={handleSubmit}>
                 Post
             </Button>
         </>
