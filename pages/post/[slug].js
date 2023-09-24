@@ -6,6 +6,7 @@ import { ThemeContext } from "../../context/theme";
 import { AuthContext } from "../../context/auth";
 import { toast } from "react-hot-toast";
 import CommentForm from "../../components/CommentComponents/CommentForm";
+import {FacebookShareButton,LinkedinShareButton,TwitterShareButton,FacebookIcon,LinkedinIcon,TwitterIcon} from "react-share";
 
 
 const {TextArea}=Input;
@@ -119,6 +120,18 @@ const slug = ({ post,allComments }) => {
                          />
                     }
                 >
+                    <FacebookShareButton url={process.browser && window.location.href}>
+                        <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    
+                    <TwitterShareButton url={process.browser && window.location.href}>
+                        <TwitterIcon size={32} round />
+                    </TwitterShareButton>
+
+                    <LinkedinShareButton url={process.browser && window.location.href}>
+                        <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+
                     <StringToHtml content={post.content} />
                     <CommentForm 
                         loading={loading}

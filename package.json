@@ -28,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-quill": "^2.0.0"
+    "react-quill": "^2.0.0",
+    "react-share": "^4.4.1"
   }
 }
