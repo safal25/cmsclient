@@ -1,4 +1,4 @@
-import { Row, Col, Card,Avatar,List,Modal,Input } from "antd";
+import { Row, Col, Card,Avatar,List,Modal,Input,Divider,Button } from "antd";
 import axios from "axios";
 import StringToHtml from "../../components/StringToHtml";
 import { useRef,useContext,useState } from "react";
@@ -7,7 +7,9 @@ import { AuthContext } from "../../context/auth";
 import { toast } from "react-hot-toast";
 import CommentForm from "../../components/CommentComponents/CommentForm";
 import {FacebookShareButton,LinkedinShareButton,TwitterShareButton,FacebookIcon,LinkedinIcon,TwitterIcon} from "react-share";
-
+import useCategory from "../../hooks/useCategory";
+import useLatestPosts from "../../hooks/useLatestPosts";
+import Link from "next/link";
 
 const {TextArea}=Input;
 
@@ -24,6 +26,10 @@ const slug = ({ post,allComments }) => {
 
     //useRef
     const editor = useRef(null);
+
+    //hook calls
+    const {categories} = useCategory();
+    const {latestPosts} = useLatestPosts();
 
     //context
     const [myTheme,setTheme]=useContext(ThemeContext);
@@ -164,8 +170,19 @@ const slug = ({ post,allComments }) => {
                     
                 </Card>
             </Col>
-            <Col xs={24} xl={8}>
-                <h1>Sidebar</h1>
+            <Col xs={22} xl={6} offset={1} >
+                <Divider>Categories</Divider>
+                {categories.map((category,index)=>{
+                    return (<Link key={index} href={`/categories/${category.slug}`}>
+                                <Button style={{"marginLeft" : 5,"marginTop" : 5}}>{category.name}</Button>
+                            </Link>)
+                })}
+                <Divider>Recent Posts</Divider>
+                {latestPosts.map((latestPost)=>{
+                    return(<Link key={latestPost._id} href={`/post/${latestPost.slug}`}>
+                                <p style={{"marginLeft" : 10}}>{latestPost.title}</p>
+                            </Link>)
+                })}
             </Col>
             <Modal bodyStyle={{backgroundColor : (myTheme==="dark")?"black":""}} 
                        onOk={()=>{handleUpdate()}} 
