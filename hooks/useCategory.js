@@ -13,7 +13,7 @@ const useCategory = ()=>{
         try {
             const {data} =  await axios.get('/categories');
             if(data?.success){
-                setCategories([...categories,...data.categories]);
+                setCategories(data.categories);
             }
             else{
                 console.log(data.error);

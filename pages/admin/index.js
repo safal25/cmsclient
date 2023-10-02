@@ -1,45 +1,20 @@
 import AdminLayout from "../../components/layouts/AdminLayout"
-import {Row,Col} from "antd"
+import {Row,Col,Divider} from "antd"
 import ProgressComponent from "../../components/ProgressComponent"
-import axios from "axios"
-import { useEffect,useState } from "react"
-import toast from "react-hot-toast"
+import useNumbers from "../../hooks/useNumbers"
+
 
 const admin=()=>{
-    //state
-    const [numbers,setNumbers]=useState({});
 
-    //lifecycle hooks
-    useEffect(()=>{
-        fetchAnalytics();
-    },[]);
-
-    //methods
-
-    const fetchAnalytics = async ()=>{
-        try {
-
-            const {data} = await axios.get('/website/analytics');
-            if(data.success){
-                setNumbers({
-                    postCount : data.postCount,
-                    commentCount : data.commentCount,
-                    userCount : data.userCount,
-                    categoryCount : data.categoryCount
-                });
-            }
-            
-        } catch (error) {
-            console.log(error);
-            toast.error("Internal server error, please contact support");
-        }
-    }
+    const {numbers} = useNumbers();
 
     return (
         <AdminLayout>
             <Row>
                 <Col span={24}>
-                    <h1 style={{"textAlign" :"center", "marginTop" : 10}}>Statistics</h1>
+                    <Divider>
+                        <h1 style={{textAlign :"center", marginTop : 10,fontSize : 20}}>Statistics</h1>
+                    </Divider>
                 </Col>
             </Row>
             <Row style={{"marginTop" : 100}}>

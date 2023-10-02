@@ -13,7 +13,7 @@ const useLatestPosts = ()=>{
         try {
             const {data} =  await axios.get('/posts/get-posts/1');
             if(data?.success){
-                setLatestPosts([...latestPosts,...data.posts]);
+                setLatestPosts(data.posts);
             }
             else{
                 console.log(data.error);

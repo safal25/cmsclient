@@ -10,6 +10,13 @@ const threeColors={
     '100%' : "#fff"
 }
 
+const conicColors = {
+    '0%': '#87d068',
+    '50%': '#ffe58f',
+    '100%': '#ffccc7',
+};
+  
+
 const ProgressComponent = ({number,name,link="#"})=>{
 
     //context
@@ -21,7 +28,7 @@ const ProgressComponent = ({number,name,link="#"})=>{
                 <Progress type="circle" percent={100} 
                         format={()=><CountUp style={{"color" : myTheme==='dark'?"#fff":'#000'}} 
                                             end={number} duration={5} />} 
-                        strokeColor={threeColors}
+                        strokeColor={conicColors}
                 />
                 <p style={{"marginTop" : 5}}>{name.toUpperCase()}</p>
             </div>
