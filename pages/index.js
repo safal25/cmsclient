@@ -30,7 +30,9 @@ function Home(){
                 content="Read latest blog posts on web development"
             />
         </Head>
-        
+
+     {title &&
+     (<div>
         <FullWidthImage title={title} subTitle={subTitle} url={fullWidthImage?.url}/>
         <Row style={{"marginTop" : 230}}>
             <Col span={6}>
@@ -83,7 +85,9 @@ function Home(){
                     <p>Join the platform to learn more</p>
                 </Col>           
             </Row>
-        </ParallaxImage>
+           </ParallaxImage>
+        </div>)
+        }
 
         </>
     );
