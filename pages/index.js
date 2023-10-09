@@ -30,6 +30,7 @@ function Home(){
                 content="Read latest blog posts on web development"
             />
         </Head>
+        
         <FullWidthImage title={title} subTitle={subTitle} url={fullWidthImage?.url}/>
         <Row style={{"marginTop" : 230}}>
             <Col span={6}>
