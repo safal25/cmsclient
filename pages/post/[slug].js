@@ -204,8 +204,8 @@ const slug = ({ post,allComments }) => {
 }
 
 export async function getServerSideProps({ params }) {
-    
-    const { data } = await axios.get(`/posts/get-post/${params.slug}`);
+
+    const { data } = await axios.get(`https://cmsbackend-k3j4.vercel.app/api/posts/get-post/${params.slug}`);
     return {
         props: { post: data.post,allComments : data.comments }
     };
