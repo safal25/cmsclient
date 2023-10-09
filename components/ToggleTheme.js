@@ -26,7 +26,7 @@ const ToggleTheme=()=>{
     return(
         <div>
         <Head>
-            <link rel="stylesheet" href={`http://localhost:3000/css/${myTheme}.css`} />
+            <link rel="stylesheet" href={`https://cmsclient-steel.vercel.app/css/${myTheme}.css`} />
             <link
   rel="stylesheet"
   href="https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css"
