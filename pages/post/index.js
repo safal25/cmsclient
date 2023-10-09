@@ -91,8 +91,8 @@ const post=({posts})=>{
 }
 
 export async function getServerSideProps() {
-
-    const {data}=await axios.get(`/posts/get-posts/1`);
+    
+    const {data}=await axios.get(`https://cmsbackend-k3j4.vercel.app/api/posts/get-posts/1`);
 
     return {
       props: {posts : data.posts}, // will be passed to the page component as props

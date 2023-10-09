@@ -15,7 +15,7 @@ const AuthProvider=(props)=>{
     //config axios
 
     if(process.browser){
-        axios.defaults.baseURL=process.env.API;
+        axios.defaults.baseURL=process.env.NEXT_PUBLIC_API;
         axios.defaults.headers.common["Authorization"]=`Bearer ${auth.token}`;
     }
     else{
