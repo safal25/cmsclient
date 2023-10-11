@@ -9,6 +9,8 @@ import useCategory from "../hooks/useCategory";
 import useHome from "../hooks/useHome";
 import Link from "next/link";
 import { ContainerOutlined, ApiOutlined, UserAddOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth";
 
 
 
@@ -20,11 +22,14 @@ function Home(){
     const {categories} = useCategory();
     const {title,subTitle,fullWidthImage}=useHome();
 
+    //context
+    const [auth,setAuth]=useContext(AuthContext);
 
     return (
         <>
         <Head>
             <title>Modern Content Management System</title>
+            {auth.user===null && <link rel="stylesheet" href={`https://cmsclient-steel.vercel.app/css/dark.css`} />}
             <meta 
                 name="description"
                 content="Read latest blog posts on web development"
