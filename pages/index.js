@@ -35,6 +35,14 @@ function Home(){
                 content="Read latest blog posts on web development"
             />
         </Head>
+        {!title &&             
+        <LoadingOutlined style={{display : 'flex',
+             justifyContent : 'center',
+             alignItems : 'center',
+             color : 'red',
+             height : '100vh',
+             fontSize : '50px'}}/>
+        }
 
      {title &&
      (<div>
