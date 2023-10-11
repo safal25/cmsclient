@@ -8,7 +8,7 @@ import useLatestPosts  from "../hooks/useLatestPosts";
 import useCategory from "../hooks/useCategory";
 import useHome from "../hooks/useHome";
 import Link from "next/link";
-import { ContainerOutlined, ApiOutlined, UserAddOutlined } from "@ant-design/icons";
+import { ContainerOutlined, ApiOutlined, UserAddOutlined,LoadingOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
 
